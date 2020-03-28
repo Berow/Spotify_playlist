@@ -4,6 +4,8 @@ const initialState = {
     isFetching: false,
     token: '',
     refresh_token: '',
+    user_name: '',
+    user_img_url: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -29,11 +31,13 @@ const reducer = (state = initialState, action) => {
             }
         case 'FETCH_SUCCESS':
             return {
-                ...state
+                ...state,
+                user_name: action.payload.response.data.display_name,
+                // user_img_url: action.payload.response.data.display_name,
             }
         case 'FETCH_FAIL':
             return {
-                ...state
+                ...state,
             }
         default:
             return state;

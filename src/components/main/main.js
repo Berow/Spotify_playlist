@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchData } from "../../actions/actions";
-import s from "./main.css";
+import Card from '../card/card'
+import "./main.css";
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
 
 import Auth from '../auth/auth'
@@ -9,17 +10,19 @@ import Auth from '../auth/auth'
 class Main extends Component {
 
   componentDidMount() {
-
     const token = localStorage.getItem('token');
     console.log(token);
-
     this.props.fetchData(token);
-
   }
 
   render() {
+    const name = this.props.user_name;
+    const img = this.props.user_img_url;
+    console.log(name, img);
+
     return (
       <Router>
+        <Card img={img} name={name} />
         <Switch>
           <Route path="/" exact render={() =>
             <ul>
@@ -36,7 +39,8 @@ class Main extends Component {
 }
 
 const mapStateToProps = state => ({
-
+  user_name: state.user.user_name,
+  user_img_url: state.user.user_img_url,
 });
 
 const mapDispatchToProps = {
