@@ -7,8 +7,8 @@ import queryString from 'query-string';
 class Auth extends Component {
 
     componentDidMount() {
-        const values = queryString.parse(this.props.location.search);
-        localStorage.setItem('code', values.code);
+        
+        const values = queryString.parse(this.props.location.search);        
         this.props.userAuth(values.code, values.state);
     }
 

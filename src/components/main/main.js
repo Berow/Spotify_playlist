@@ -1,10 +1,21 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchData } from "../../actions/actions";
 import s from "./main.css";
-import { BrowserRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
 
 import Auth from '../auth/auth'
 
 class Main extends Component {
+
+  componentDidMount() {
+
+    const token = localStorage.getItem('token');
+    console.log(token);
+
+    this.props.fetchData(token);
+
+  }
 
   render() {
     return (
@@ -24,5 +35,13 @@ class Main extends Component {
   }
 }
 
+const mapStateToProps = state => ({
 
-export default Main;
+});
+
+const mapDispatchToProps = {
+  fetchData: fetchData
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

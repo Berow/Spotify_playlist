@@ -1,9 +1,10 @@
 import axios from 'axios';
-// import axiosInstance from '../utils'
+import queryString from 'query-string';
+import auth from '../components/auth/auth';
 
 // import { history } from '../helpers';
 
-export const userAuth = (code, state) => {
+const userAuth = (code, state) => {
     const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
     const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
 
@@ -20,35 +21,67 @@ export const userAuth = (code, state) => {
             })
         }
         else {
-            axios({
-                method: 'POST',
-                url: 'https://accounts.spotify.com/api/token',
-                data: {
-                    grant_type: "authorization_code",
-                    code: code,
-                    redirect_uri: 'http://localhost:9000',
-                },
-                dataType: 'json',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Basic ' + `${client_id}:${client_secret}`.toString('base64')
+            axios.post('https://accounts.spotify.com/api/token', queryString.stringify({
+                "grant_type": 'authorization_code',
+                "code": code,
+                "redirect_uri": 'http://localhost:9000/auth/'
+            }),
+                {
+                    headers: {
+                        "Authorization": "Basic " + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
                 }
-            })
+            )
                 .then(response => {
-                    console.log(response);
+                    localStorage.setItem('token', response.data.access_token);
+                    localStorage.setItem('refresh_token', response.data.refresh_token);
+
                     dispatch({
                         type: 'AUTH_SUCCESS',
-                        payload: response.code,
+                        payload: {
+                            token: response.data.access_token,
+                            refresh_token: response.data.refresh_token
+                        },
                     });
                 })
                 .catch(() => {
                     dispatch({
                         type: 'AUTH_FAIL',
                         error: true,
-                        payload: new Error('Ошибка авторизации'),
+                        payload: new Error('Wrong code'),
                     })
                 })
         }
     }
 }
+
+const fetchData = (token) => {
+    return dispatch => {
+        dispatch({
+            type: 'FETCH_REQUEST',
+        })
+        axios.get('https://api.spotify.com/v1/me',
+            {
+                headers: {
+                    "Authorization": "Bearer " + token,
+                }
+            }
+        ).then(response => {
+            console.log(response);
+            dispatch({
+                type: 'FETCH_SUCCESS',
+                payload: response,
+            });
+        })
+            .catch(() => {
+                dispatch({
+                    type: 'FETCH_FAIL',
+                    error: true,
+                    payload: new Error('Wrong code'),
+                })
+            })
+    }
+}
+
+export { userAuth, fetchData };

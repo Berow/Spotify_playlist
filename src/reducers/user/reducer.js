@@ -2,7 +2,8 @@ const initialState = {
     isAuth: false,
     error: '',
     isFetching: false,
-    code: ''
+    token: '',
+    refresh_token: '',
 }
 
 const reducer = (state = initialState, action) => {
@@ -17,7 +18,8 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuth: true,
-                code: action.payload.code,
+                token: action.payload.token,
+                refresh_token: action.payload.refresh_token
             }
         case 'AUTH_FAIL':
             return {
@@ -25,7 +27,14 @@ const reducer = (state = initialState, action) => {
                 isFetching: false,
                 error: action.payload.message
             }
-
+        case 'FETCH_SUCCESS':
+            return {
+                ...state
+            }
+        case 'FETCH_FAIL':
+            return {
+                ...state
+            }
         default:
             return state;
     }
