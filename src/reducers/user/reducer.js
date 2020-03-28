@@ -38,8 +38,8 @@ const reducer = (state = initialState, action) => {
         case 'FETCH_SUCCESS':
             return {
                 ...state,
-                user_name: action.payload.response.data.display_name,
-                // user_img_url: action.payload.response.data.display_name,
+                user_name: action.payload.data.display_name,
+                user_img_url: action.payload.data.images[0].url,
             }
         case 'FETCH_FAIL':
             return {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './card.css';
+import  styles from './card.css';
 
 const Card = ({ name, img }) => {
 

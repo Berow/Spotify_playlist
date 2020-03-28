@@ -12,9 +12,8 @@ class Main extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');
     const refresh_token = localStorage.getItem('refresh_token');
-
-    console.log(token);
-    this.props.refreshToken(refresh_token);
+    
+    // this.props.refreshToken(refresh_token);
     this.props.fetchData(token);
   }
 
@@ -22,6 +21,7 @@ class Main extends Component {
     const name = this.props.user_name;
     const img = this.props.user_img_url;
     console.log(name, img);
+    console.log(this.props);
 
     return (
       <Router>

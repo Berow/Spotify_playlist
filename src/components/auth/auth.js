@@ -6,8 +6,7 @@ import queryString from 'query-string';
 
 class Auth extends Component {
 
-    componentDidMount() {
-
+    componentDidMount() {        
         const values = queryString.parse(this.props.location.search);
         this.props.userAuth(values.code, values.state);
     }
@@ -24,7 +23,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    userAuth: userAuth
+    userAuth: userAuth,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));

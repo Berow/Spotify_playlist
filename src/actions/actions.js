@@ -1,6 +1,5 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import auth from '../components/auth/auth';
 
 // import { history } from '../helpers';
 
@@ -34,6 +33,7 @@ const userAuth = (code, state) => {
                 }
             )
                 .then(response => {
+                    console.log(response);
                     localStorage.setItem('token', response.data.access_token);
                     localStorage.setItem('refresh_token', response.data.refresh_token);
 
@@ -67,14 +67,10 @@ const fetchData = (token) => {
                     "Authorization": "Bearer " + token,
                 }
             }
-        ).then(response => {
-            console.log(response);
+        ).then(response => {            
             dispatch({
                 type: 'FETCH_SUCCESS',
-                payload: {
-                    token: response.data.access_token,
-                    refresh_token: response.data.refresh_token
-                },
+                payload: response,
             });
         })
             .catch(() => {
@@ -88,7 +84,7 @@ const fetchData = (token) => {
 }
 
 const refreshToken = (token) => {
-    
+
     const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
     const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
 
@@ -110,7 +106,7 @@ const refreshToken = (token) => {
                 console.log(response);
 
                 localStorage.setItem('token', response.data.access_token);
-                localStorage.setItem('refresh_token', response.data.refresh_token);
+                // localStorage.setItem('refresh_token', response.data.refresh_token);
 
                 dispatch({
                     type: 'REFRESH_SUCCESS',
