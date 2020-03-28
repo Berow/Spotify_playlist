@@ -1,11 +1,13 @@
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {    
+module.exports = {
     entry: "./src/index.js",
     mode: "development",
     output: {
-        filename: "./main.js"
+        path: path.resolve(__dirname, 'dist'),
+        filename: "main.js",
+        publicPath: '/',
     },
     devServer: {
         contentBase: path.join(__dirname, "dist"),
@@ -16,12 +18,6 @@ module.exports = {
         open: true,
         historyApiFallback: true,
         publicPath: '/',
-        proxy: {
-            '/api': {
-                target: 'http://<ip>:8888',
-                secure: false,
-            },
-        },
         headers: {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
@@ -73,6 +69,6 @@ module.exports = {
             inject: true,
             template: path.join('./public', 'index.html'),
             filename: 'index.html'
-          }),
+        }),
     ]
 };

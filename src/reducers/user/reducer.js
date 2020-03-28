@@ -7,7 +7,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOGIN_REQUEST':
+        case 'AUTH_REQUEST':
             return {
                 ...state,
                 isFetching: true,
