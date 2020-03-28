@@ -29,6 +29,12 @@ const reducer = (state = initialState, action) => {
                 isFetching: false,
                 error: action.payload.message
             }
+        case 'FETCH_REQUEST':
+            return {
+                ...state,
+                isFetching: true,
+                error: ''
+            }
         case 'FETCH_SUCCESS':
             return {
                 ...state,
@@ -36,6 +42,22 @@ const reducer = (state = initialState, action) => {
                 // user_img_url: action.payload.response.data.display_name,
             }
         case 'FETCH_FAIL':
+            return {
+                ...state,
+            }
+        case 'REFRESH_REQUEST':
+            return {
+                ...state,
+                isFetching: true,
+                error: ''
+            }
+        case 'REFRESH_SUCCESS':
+            return {
+                ...state,
+                token: action.payload.token,
+                refresh_token: action.payload.refresh_token
+            }
+        case 'REFRESH_FAIL':
             return {
                 ...state,
             }

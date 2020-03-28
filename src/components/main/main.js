@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchData } from "../../actions/actions";
+import { fetchData, refreshToken } from "../../actions/actions";
 import Card from '../card/card'
 import "./main.css";
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
@@ -11,7 +11,10 @@ class Main extends Component {
 
   componentDidMount() {
     const token = localStorage.getItem('token');
+    const refresh_token = localStorage.getItem('refresh_token');
+
     console.log(token);
+    this.props.refreshToken(refresh_token);
     this.props.fetchData(token);
   }
 
@@ -44,7 +47,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchData: fetchData
+  fetchData: fetchData,
+  refreshToken: refreshToken,
 }
 
 
