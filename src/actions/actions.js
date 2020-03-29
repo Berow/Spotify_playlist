@@ -1,126 +1,111 @@
 import axios from 'axios';
 import queryString from 'query-string';
+import { spotifyServices } from '../services/spotify_service';
 
-// import { history } from '../helpers';
+import { history } from '../helpers';
 
 const userAuth = (code, state) => {
-    const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
-    const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
+  return (dispatch) => {
+    dispatch({
+      type: 'AUTH_REQUEST',
+    });
 
-    return dispatch => {
+    if (state != 'zh88psiu6') {
+      dispatch({
+        type: 'AUTH_FAIL',
+        error: true,
+        payload: new Error('State mismatch'),
+      });
+    } else {
+      spotifyServices.login(code).then((response) => {
+        console.log(response);
         dispatch({
-            type: 'AUTH_REQUEST',
-        })
-
-        if (state != 'zh88psiu6') {
-            dispatch({
-                type: 'AUTH_FAIL',
-                error: true,
-                payload: new Error('State mismatch'),
-            })
-        }
-        else {
-            axios.post('https://accounts.spotify.com/api/token', queryString.stringify({
-                "grant_type": 'authorization_code',
-                "code": code,
-                "redirect_uri": 'http://localhost:9000/auth/'
-            }),
-                {
-                    headers: {
-                        "Authorization": "Basic " + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                }
-            )
-                .then(response => {
-                    console.log(response);
-                    localStorage.setItem('token', response.data.access_token);
-                    localStorage.setItem('refresh_token', response.data.refresh_token);
-
-                    dispatch({
-                        type: 'AUTH_SUCCESS',
-                        payload: {
-                            token: response.data.access_token,
-                            refresh_token: response.data.refresh_token
-                        },
-                    });
-                })
-                .catch(() => {
-                    dispatch({
-                        type: 'AUTH_FAIL',
-                        error: true,
-                        payload: new Error('Wrong code'),
-                    })
-                })
-        }
+          type: 'AUTH_SUCCESS',
+          payload: {
+            token: response.access_token,
+            refresh_token: response.refresh_token,
+          },
+        });
+        (error) => {
+          dispatch({
+            type: 'AUTH_FAIL',
+            error: true,
+            payload: new Error('error'),
+          });
+        };
+      });
     }
-}
+  };
+};
 
-const fetchData = (token) => {
-    return dispatch => {
+const getUser = (token) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'FETCH_REQUEST',
+    });
+    spotifyServices.getUser(token).then((response) => {
+      console.log(response);
+      dispatch({
+        type: 'FETCH_SUCCESS',
+        payload: response,
+      });
+      (error) => {
         dispatch({
-            type: 'FETCH_REQUEST',
-        })
-        axios.get('https://api.spotify.com/v1/me',
-            {
-                headers: {
-                    "Authorization": "Bearer " + token,
-                }
-            }
-        ).then(response => {            
-            dispatch({
-                type: 'FETCH_SUCCESS',
-                payload: response,
-            });
-        })
-            .catch(() => {
-                dispatch({
-                    type: 'FETCH_FAIL',
-                    error: true,
-                    payload: new Error('Wrong code'),
-                })
-            })
-    }
-}
+          type: 'FETCH_FAIL',
+          error: true,
+          payload: new Error('error'),
+        });
+      };
+    });
+  };
+};
 
-const refreshToken = (token) => {
+// const refreshToken = (token) => {
+//   const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
+//   const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
 
-    const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
-    const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
+//   return (dispatch) => {
+//     dispatch({
+//       type: 'REFRESH_REQUEST',
+//     });
+//     axios
+//       .post(
+//         'https://accounts.spotify.com/api/token',
+//         queryString.stringify({
+//           grant_type: 'refresh_token',
+//           refresh_token: token,
+//         }),
+//         {
+//           headers: {
+//             Authorization: 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
+//           },
+//         },
+//       )
+//       .then((response) => {
+//         console.log(response);
 
-    return dispatch => {
-        dispatch({
-            type: 'REFRESH_REQUEST',
-        })
-        axios.post('https://accounts.spotify.com/api/token', queryString.stringify({
-            "grant_type": 'refresh_token',
-            "refresh_token": token,
-        }),
-            {
-                headers: {
-                    "Authorization": "Basic " + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
-                }
-            }
-        )
-            .then(response => {
-                console.log(response);
+//         localStorage.setItem('token', response.data.access_token);
+//         // localStorage.setItem('refresh_token', response.data.refresh_token);
 
-                localStorage.setItem('token', response.data.access_token);
-                // localStorage.setItem('refresh_token', response.data.refresh_token);
+//         dispatch({
+//           type: 'REFRESH_SUCCESS',
+//           payload: response,
+//         });
+//       })
+//       .catch(() => {
+//         dispatch({
+//           type: 'REFRESH_FAIL',
+//           error: true,
+//           payload: new Error('Wrong token'),
+//         });
+//       });
+//   };
+// };
 
-                dispatch({
-                    type: 'REFRESH_SUCCESS',
-                    payload: response,
-                });
-            })
-            .catch(() => {
-                dispatch({
-                    type: 'REFRESH_FAIL',
-                    error: true,
-                    payload: new Error('Wrong token'),
-                })
-            })
-    }
-}
-
-export { userAuth, fetchData, refreshToken };
+const logout = () => {
+  return () => {
+    spotifyServices.logout();
+    window.location.reload(true);
+  };
+};
+export { userAuth, getUser, logout };
