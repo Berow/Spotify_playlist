@@ -21,6 +21,8 @@ function login(code) {
   const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
   const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
 
+  console.log(code)
+
   return axios
     .post(
       'https://accounts.spotify.com/api/token',
@@ -36,11 +38,10 @@ function login(code) {
         },
       },
     )
-    .then(handleResponse())
-    .then((response) => {
-      // console.log(response);
-      localStorage.setItem('token', response.access_token);
-      localStorage.setItem('refresh_token', response.refresh_token);
+    .then(handleResponse)
+    .then((response) => {      
+      localStorage.setItem('token', response.data.access_token);
+      localStorage.setItem('refresh_token', response.data.refresh_token);
       return response;
     });
 }
@@ -86,7 +87,6 @@ function refreshToken(refreshToken) {
       },
     )
     .then((response) => {
-      // console.log(response);
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
       return response;

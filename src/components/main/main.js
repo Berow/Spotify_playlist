@@ -4,6 +4,7 @@ import { getUser, refreshToken, logout } from '../../actions/actions';
 import Card from '../card/card';
 import './main.css';
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
+import { history } from '../../helpers/history';
 
 import Auth from '../auth/auth';
 
@@ -24,7 +25,7 @@ class Main extends Component {
     };
 
     return (
-      <Router>
+      <Router history = {history}>
         <Card img={img} name={name} />
         <Switch>
           <Route

@@ -9,7 +9,7 @@ const userAuth = (code, state) => {
     dispatch({
       type: 'AUTH_REQUEST',
     });
-
+    
     if (state != 'zh88psiu6') {
       dispatch({
         type: 'AUTH_FAIL',
@@ -17,8 +17,7 @@ const userAuth = (code, state) => {
         payload: new Error('State mismatch'),
       });
     } else {
-      spotifyServices.login(code).then((response) => {
-        console.log(response);
+      spotifyServices.login(code).then((response) => {        
         dispatch({
           type: 'AUTH_SUCCESS',
           payload: {
