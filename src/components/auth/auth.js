@@ -13,14 +13,9 @@ class Auth extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.isAuth !== prevProps.isAuth) {
-      const red = () => {
+
+    if (this.props.isAuth !== prevProps.isAuth) {      
         this.props.history.push("/")
-      }
-      setTimeout(red, 3000);
-
-
-      // <Redirect to="/"/>
     }
   }
 

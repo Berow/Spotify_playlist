@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUser, refreshToken, logout } from '../../actions/actions';
+import { getUser, logout, getAllPlaylists } from '../../actions/actions';
 import Card from '../card/card';
 import './main.css';
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
@@ -11,21 +11,55 @@ import Auth from '../auth/auth';
 class Main extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token');
-    // const refresh_token = localStorage.getItem('refresh_token');
-    // this.props.refreshToken(refresh_token);
-    this.props.getUser(token);
+    if (token != '') {
+      this.props.getUser(token);
+      this.props.getAllPlaylists(token);
+      // const refresh_token = localStorage.getItem('refresh_token');
+      // this.props.refreshToken(refresh_token);
+    }
+
+  }
+
+  componentDidUpdate(prevProps) {
+
+    const token = localStorage.getItem('token');
+
+    if (this.props.isAuth !== prevProps.isAuth) {
+      this.props.getUser(token);
+      this.props.getAllPlaylists(token);
+    }
+  }
+
+  renderItems() {
+    // ItemList.defaultProps = {
+    //   onItemSelected: () => { }
+    // }
+
+    console.log(this.props.playlists);
+
+    return this.props.playlists.map((item) => {
+
+      const label = item.name;
+      return (
+        <li>
+          {label}
+        </li>
+      )
+    })
   }
 
   render() {
     const name = this.props.user_name;
     const img = this.props.user_img_url;
 
+    const items = this.renderItems()
+
     const out = (e) => {
       this.props.logout();
     };
 
     return (
-      <Router history = {history}>
+      <Router >
         <Card img={img} name={name} />
         <Switch>
           <Route
@@ -41,6 +75,7 @@ class Main extends Component {
                 <li>
                   <button onClick={out}>LOGOUT</button>
                 </li>
+                {items}
               </ul>
             )}
           />
@@ -54,12 +89,14 @@ class Main extends Component {
 const mapStateToProps = (state) => ({
   user_name: state.user.user_name,
   user_img_url: state.user.user_img_url,
+  isAuth: state.user.isAuth,
+  playlists: state.user.playlists,
 });
 
 const mapDispatchToProps = {
   getUser: getUser,
-  refreshToken: refreshToken,
   logout: logout,
+  getAllPlaylists: getAllPlaylists,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

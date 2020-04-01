@@ -1,11 +1,12 @@
 const initialState = {
-  isAuth: false,
+  isAuth: false,   
   error: '',
   isFetching: false,
   token: '',
   refresh_token: '',
   user_name: '',
   user_img_url: '',
+  playlists:[],
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +43,21 @@ const reducer = (state = initialState, action) => {
         user_img_url: action.payload.data.images[0].url,
       };
     case 'FETCH_FAIL':
+      return {
+        ...state,
+      };
+    case 'PLAYLISTS_FETCH_REQUEST':
+      return {
+        ...state,
+        isFetching: true,
+        error: '',
+      };
+    case 'PLAYLISTS_FETCH_SUCCESS':
+      return {
+        ...state,
+        playlists:action.payload,        
+      };
+    case 'PLAYLISTS_FETCH_FAIL':
       return {
         ...state,
       };

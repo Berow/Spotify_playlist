@@ -42,8 +42,7 @@ const getUser = (token) => {
     dispatch({
       type: 'FETCH_REQUEST',
     });
-    spotifyServices.getUser(token).then((response) => {
-      console.log(response);
+    spotifyServices.getUser(token).then((response) => {      
       dispatch({
         type: 'FETCH_SUCCESS',
         payload: response,
@@ -51,6 +50,28 @@ const getUser = (token) => {
       (error) => {
         dispatch({
           type: 'FETCH_FAIL',
+          error: true,
+          payload: new Error('error'),
+        });
+      };
+    });
+  };
+};
+
+const getAllPlaylists = (token) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'PLAYLISTS_FETCH_REQUEST',
+    });
+    spotifyServices.getPlaylists(token).then((items) => {
+      console.log(items);
+      dispatch({
+        type: 'PLAYLISTS_FETCH_SUCCESS',
+        payload: items,
+      });
+      (error) => {
+        dispatch({
+          type: 'PLAYLISTS_FETCH_FAIL',
           error: true,
           payload: new Error('error'),
         });
@@ -107,4 +128,4 @@ const logout = () => {
     window.location.reload(true);
   };
 };
-export { userAuth, getUser, logout };
+export { userAuth, getUser, getAllPlaylists, logout };
