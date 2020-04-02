@@ -61,6 +61,20 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
       };
+    case 'TRACKS_FETCH_REQUEST':
+      return {
+        ...state,
+        isFetching: true,
+        error: '',
+      };
+    case 'TRACKS_FETCH_SUCCESS':
+      return {
+        ...state,               
+      };
+    case 'TRACKS_FETCH_FAIL':
+      return {
+        ...state,
+      };
     // case 'REFRESH_REQUEST':
     //   return {
     //     ...state,

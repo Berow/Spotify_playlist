@@ -17,6 +17,24 @@ function handleResponse(response) {
   return response;
 }
 
+function getData(url) {
+  const token = localStorage.getItem('token');
+  
+  return axios
+    .get(url, {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    })
+    .then(handleResponse)
+    .then((response) => {           
+      return response;
+    })
+    .catch((error) => {
+      handleResponse(error.response);
+    });
+}
+
 function login(code) {
   const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
   const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
@@ -50,36 +68,20 @@ function logout() {
   localStorage.removeItem('code');
 }
 
-const getUser = (token) => {
-  return axios
-    .get('https://api.spotify.com/v1/me', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-    .then(handleResponse)
-    .then((response) => {
-      return response;
-    })
-    .catch((error) => {
-      handleResponse(error.response);
-    });
+async function getUser() {
+  const res = await getData('https://api.spotify.com/v1/me/');
+  return res;
 };
 
-const getAllPlaylists = (token) => {
-  return axios
-    .get('https://api.spotify.com/v1/me/playlists', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    })
-    .then(handleResponse)
-    .then((response) => {      
-      return response.data.items;
-    })
-    .catch((error) => {
-      handleResponse(error.response);
-    });
+async function getAllPlaylists() {
+  const res = await getData('https://api.spotify.com/v1/me/playlists');
+  return res.data.items;
+};
+
+async function getPlaylistTracks(url) {
+  const res = await getData(url);   
+  console.log(res) ;
+  return res;
 };
 
 function refreshToken(refreshToken) {
@@ -100,8 +102,7 @@ function refreshToken(refreshToken) {
         },
       },
     )
-    .then((response) => {
-      console.log(response)
+    .then((response) => {      
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
       window.location.reload(true);
@@ -118,4 +119,5 @@ export const spotifyServices = {
   refreshToken,
   getUser,
   getAllPlaylists,
+  getPlaylistTracks,
 };

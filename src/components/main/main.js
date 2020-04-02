@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUser, logout, getAllPlaylists } from '../../actions/actions';
+import { getUser, logout, getAllPlaylists, getPlaylistTracks } from '../../actions/actions';
 import Card from '../card/card';
 import './main.css';
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
@@ -14,6 +14,7 @@ class Main extends Component {
     if (token != '') {
       this.props.getUser(token);
       this.props.getAllPlaylists(token);
+      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/4pylRY0ogA4JwC6CplYTxl/tracks");
       // const refresh_token = localStorage.getItem('refresh_token');
       // this.props.refreshToken(refresh_token);
     }
@@ -22,30 +23,28 @@ class Main extends Component {
 
   componentDidUpdate(prevProps) {
 
-    const token = localStorage.getItem('token');
-
     if (this.props.isAuth !== prevProps.isAuth) {
-      this.props.getUser(token);
-      this.props.getAllPlaylists(token);
+      this.props.getUser();
+      this.props.getAllPlaylists();
+      // [""0""].tracks.href
+      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/4pylRY0ogA4JwC6CplYTxl/tracks");
     }
   }
 
-  renderItems() {
-    // ItemList.defaultProps = {
-    //   onItemSelected: () => { }
-    // }
+  renderItems() {    
 
     console.log(this.props.playlists);
 
-    return this.props.playlists.map((item) => {
+    const data = this.props.playlists.map((item) => {
+        const label = item.name;
+        return (
+          <li>
+            {label}
+          </li>
+        )
+      })
 
-      const label = item.name;
-      return (
-        <li>
-          {label}
-        </li>
-      )
-    })
+    // return 
   }
 
   render() {
@@ -75,7 +74,8 @@ class Main extends Component {
                 <li>
                   <button onClick={out}>LOGOUT</button>
                 </li>
-                {items}
+                <hr></hr>
+                {/* {items} */}
               </ul>
             )}
           />
@@ -97,6 +97,7 @@ const mapDispatchToProps = {
   getUser: getUser,
   logout: logout,
   getAllPlaylists: getAllPlaylists,
+  getPlaylistTracks: getPlaylistTracks,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

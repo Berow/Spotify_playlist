@@ -9,7 +9,7 @@ const userAuth = (code, state) => {
     dispatch({
       type: 'AUTH_REQUEST',
     });
-    
+
     if (state != 'zh88psiu6') {
       dispatch({
         type: 'AUTH_FAIL',
@@ -17,7 +17,7 @@ const userAuth = (code, state) => {
         payload: new Error('State mismatch'),
       });
     } else {
-      spotifyServices.login(code).then((response) => {        
+      spotifyServices.login(code).then((response) => {
         dispatch({
           type: 'AUTH_SUCCESS',
           payload: {
@@ -37,12 +37,12 @@ const userAuth = (code, state) => {
   };
 };
 
-const getUser = (token) => {
+const getUser = () => {
   return (dispatch) => {
     dispatch({
       type: 'FETCH_REQUEST',
     });
-    spotifyServices.getUser(token).then((response) => {      
+    spotifyServices.getUser().then((response) => {
       dispatch({
         type: 'FETCH_SUCCESS',
         payload: response,
@@ -58,13 +58,12 @@ const getUser = (token) => {
   };
 };
 
-const getAllPlaylists = (token) => {
+const getAllPlaylists = () => {
   return (dispatch) => {
     dispatch({
       type: 'PLAYLISTS_FETCH_REQUEST',
     });
-    spotifyServices.getPlaylists(token).then((items) => {
-      console.log(items);
+    spotifyServices.getAllPlaylists().then((items) => {
       dispatch({
         type: 'PLAYLISTS_FETCH_SUCCESS',
         payload: items,
@@ -72,6 +71,27 @@ const getAllPlaylists = (token) => {
       (error) => {
         dispatch({
           type: 'PLAYLISTS_FETCH_FAIL',
+          error: true,
+          payload: new Error('error'),
+        });
+      };
+    });
+  };
+};
+
+const getPlaylistTracks = (url) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'TRACKS_FETCH_REQUEST',
+    });
+    spotifyServices.getPlaylistTracks(url).then((items) => {
+      dispatch({
+        type: 'TRACKS_FETCH_SUCCESS',
+        payload: items,
+      });
+      (error) => {
+        dispatch({
+          type: 'TRACKS_FETCH_FAIL',
           error: true,
           payload: new Error('error'),
         });
@@ -128,4 +148,4 @@ const logout = () => {
     window.location.reload(true);
   };
 };
-export { userAuth, getUser, getAllPlaylists, logout };
+export { userAuth, getUser, getAllPlaylists, logout, getPlaylistTracks };
