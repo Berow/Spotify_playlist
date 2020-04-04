@@ -1,25 +1,22 @@
-import axios from 'axios';
-import queryString from 'query-string';
-import { spotifyServices } from '../services/spotify_service';
-
-import { history } from '../helpers';
+import { spotifyServices } from '../services/spotify_service';  
+import { Constants } from '../constants/constants';
 
 const userAuth = (code, state) => {
   return (dispatch) => {
     dispatch({
-      type: 'AUTH_REQUEST',
+      type: Constants.AUTH_REQUEST,
     });
 
     if (state != 'zh88psiu6') {
       dispatch({
-        type: 'AUTH_FAIL',
+        type: Constants.AUTH_FAIL,
         error: true,
         payload: new Error('State mismatch'),
       });
     } else {
       spotifyServices.login(code).then((response) => {
         dispatch({
-          type: 'AUTH_SUCCESS',
+          type: Constants.AUTH_SUCCESS,
           payload: {
             token: response.access_token,
             refresh_token: response.refresh_token,
@@ -27,7 +24,7 @@ const userAuth = (code, state) => {
         });
         (error) => {
           dispatch({
-            type: 'AUTH_FAIL',
+            type: Constants.AUTH_FAIL,
             error: true,
             payload: new Error('error'),
           });
@@ -40,16 +37,16 @@ const userAuth = (code, state) => {
 const getUser = () => {
   return (dispatch) => {
     dispatch({
-      type: 'FETCH_REQUEST',
+      type: Constants.USER_FETCH_REQUEST,
     });
     spotifyServices.getUser().then((response) => {
       dispatch({
-        type: 'FETCH_SUCCESS',
+        type: Constants.USER_FETCH_SUCCESS,
         payload: response,
       });
       (error) => {
         dispatch({
-          type: 'FETCH_FAIL',
+          type: Constants.USER_FETCH_FAIL,
           error: true,
           payload: new Error('error'),
         });
@@ -61,16 +58,17 @@ const getUser = () => {
 const getAllPlaylists = () => {
   return (dispatch) => {
     dispatch({
-      type: 'PLAYLISTS_FETCH_REQUEST',
+      type: Constants.PLAYLISTS_FETCH_REQUEST,
     });
     spotifyServices.getAllPlaylists().then((items) => {
+      
       dispatch({
-        type: 'PLAYLISTS_FETCH_SUCCESS',
+        type: Constants.PLAYLISTS_FETCH_SUCCESS,
         payload: items,
       });
       (error) => {
         dispatch({
-          type: 'PLAYLISTS_FETCH_FAIL',
+          type: Constants.PLAYLISTS_FETCH_FAIL,
           error: true,
           payload: new Error('error'),
         });
@@ -80,18 +78,18 @@ const getAllPlaylists = () => {
 };
 
 const getPlaylistTracks = (url) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'TRACKS_FETCH_REQUEST',
+  return (dispatch) => {    
+    dispatch({      
+      type: Constants.TRACKS_FETCH_REQUEST,
     });
     spotifyServices.getPlaylistTracks(url).then((items) => {
       dispatch({
-        type: 'TRACKS_FETCH_SUCCESS',
+        type: Constants.TRACKS_FETCH_SUCCESS,
         payload: items,
       });
       (error) => {
         dispatch({
-          type: 'TRACKS_FETCH_FAIL',
+          type: Constants.TRACKS_FETCH_FAIL,
           error: true,
           payload: new Error('error'),
         });

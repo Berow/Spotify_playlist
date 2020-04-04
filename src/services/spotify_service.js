@@ -10,7 +10,6 @@ function handleResponse(response) {
 
     const error = response.status;
 
-    // eslint-disable-next-line no-throw-literal
     throw { error };
   }
   // }
@@ -19,7 +18,7 @@ function handleResponse(response) {
 
 function getData(url) {
   const token = localStorage.getItem('token');
-  
+
   return axios
     .get(url, {
       headers: {
@@ -27,7 +26,7 @@ function getData(url) {
       },
     })
     .then(handleResponse)
-    .then((response) => {           
+    .then((response) => {
       return response;
     })
     .catch((error) => {
@@ -75,13 +74,25 @@ async function getUser() {
 
 async function getAllPlaylists() {
   const res = await getData('https://api.spotify.com/v1/me/playlists');
+  console.log(res.data.items);
   return res.data.items;
 };
 
 async function getPlaylistTracks(url) {
-  const res = await getData(url);   
-  console.log(res) ;
-  return res;
+  const tracks = [];
+  let res = await getData(url);
+  res.data.items.forEach(item => {
+    tracks.push(item)
+  });  
+
+  while (res.data.next !== null) {
+    res = await getData(res.data.next);
+    res.data.items.forEach(item => {
+      tracks.push(item)
+    });
+  } 
+
+  return tracks;
 };
 
 function refreshToken(refreshToken) {
@@ -102,7 +113,7 @@ function refreshToken(refreshToken) {
         },
       },
     )
-    .then((response) => {      
+    .then((response) => {
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
       window.location.reload(true);

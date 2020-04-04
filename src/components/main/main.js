@@ -14,11 +14,10 @@ class Main extends Component {
     if (token != '') {
       this.props.getUser(token);
       this.props.getAllPlaylists(token);
-      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/4pylRY0ogA4JwC6CplYTxl/tracks");
+      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/61hC2O5iJdzElqoXuvYEZj/tracks");
       // const refresh_token = localStorage.getItem('refresh_token');
       // this.props.refreshToken(refresh_token);
     }
-
   }
 
   componentDidUpdate(prevProps) {
@@ -27,31 +26,30 @@ class Main extends Component {
       this.props.getUser();
       this.props.getAllPlaylists();
       // [""0""].tracks.href
-      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/4pylRY0ogA4JwC6CplYTxl/tracks");
+      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/61hC2O5iJdzElqoXuvYEZj/tracks");
     }
   }
 
-  renderItems() {    
+  renderItems(playlist) {
+    console.log(playlist);
 
-    console.log(this.props.playlists);
-
-    const data = this.props.playlists.map((item) => {
-        const label = item.name;
-        return (
-          <li>
-            {label}
-          </li>
-        )
-      })
-
-    // return 
+    return playlist.map((item) => {
+      const label = item.name;
+      const id = item.id;
+      return (
+        <li key={id}>
+          {label}
+        </li>
+      )
+    })
   }
 
   render() {
-    const name = this.props.user_name;
-    const img = this.props.user_img_url;
+    const name = this.props.user.user_name;
+    const img = this.props.user.user_img_url;
+    console.log(this.props);    
 
-    const items = this.renderItems()
+    const items = this.renderItems(this.props.playlists.playlists);
 
     const out = (e) => {
       this.props.logout();
@@ -87,10 +85,20 @@ class Main extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  user_name: state.user.user_name,
-  user_img_url: state.user.user_img_url,
-  isAuth: state.user.isAuth,
+  // isAuth: state.user.auth,
+  // isAuthFetching:state.user.auth.isAuthFetching,
+  // isUserFetching:state.user.user.isUserFetching,
+  // user_name: state.user.user.user_name,
+  // user_img_url: state.user.user.user_img_url,
+  // isPlaylistsFetching: state.user.playlists.isPlaylistsFetching,
+  // playlists: state.user.playlists,
+  // isTracksFetching:state.user.isTracksFetching,
+  // tracks:state.user.tracks,
+  auth: state.user.auth,
+  user: state.user.user,
   playlists: state.user.playlists,
+  tracks: state.user.tracks,
+
 });
 
 const mapDispatchToProps = {

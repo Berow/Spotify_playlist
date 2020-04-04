@@ -1,80 +1,135 @@
+import { Constants } from '../../constants/constants';
+
 const initialState = {
-  isAuth: false,   
+
+  auth: {
+    isAuth: false,
+    isAuthFetching: false,
+    token: '',
+    refresh_token: '',
+  },
+
+  user: {
+    user_name: '',
+    user_img_url: '',
+    isUserFetching: false,
+  },
+
+  playlists: {
+    isPlaylistsFetching: false,
+    playlists: [],
+  },
+
+  tracks: {
+    isTracksFetching: false,
+    tracks: [],
+  },
+
   error: '',
-  isFetching: false,
-  token: '',
-  refresh_token: '',
-  user_name: '',
-  user_img_url: '',
-  playlists:[],
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'AUTH_REQUEST':
+    case Constants.AUTH_REQUEST:
       return {
         ...state,
-        isFetching: true,
-        error: '',
+        auth: {
+          isAuthFetching: true,
+        },
       };
-    case 'AUTH_SUCCESS':
+    case Constants.AUTH_SUCCESS:
       return {
         ...state,
-        isAuth: true,
-        token: action.payload.token,
-        refresh_token: action.payload.refresh_token,
+        auth: {
+          isAuth: true,
+          isAuthFetching: false,
+          token: action.payload.token,
+          refresh_token: action.payload.refresh_token,
+        }
       };
-    case 'AUTH_FAIL':
+    case Constants.AUTH_FAIL:
       return {
         ...state,
-        isFetching: false,
+        auth: {
+          isAuthFetching: false,
+        },
         error: action.payload.message,
+
       };
-    case 'FETCH_REQUEST':
+    case Constants.USER_FETCH_REQUEST:
       return {
         ...state,
-        isFetching: true,
+        user: {
+          isUserFetching: true,
+        },
+      };
+    case Constants.USER_FETCH_SUCCESS:
+      return {
+        ...state,
+        user: {
+          isUserFetching: false,
+          user_name: action.payload.data.display_name,
+          user_img_url: action.payload.data.images[0].url,
+        },
+      };
+    case Constants.USER_FETCH_FAIL:
+      return {
+        ...state,
+        user: {
+
+          isUserFetching: false,
+        },
+        error: action.payload,
+      };
+    case Constants.PLAYLISTS_FETCH_REQUEST:
+      return {
+        ...state,
+        playlists: {
+          isPlaylistsFetching: true,
+        },
         error: '',
       };
-    case 'FETCH_SUCCESS':
+    case Constants.PLAYLISTS_FETCH_SUCCESS:
       return {
         ...state,
-        user_name: action.payload.data.display_name,
-        user_img_url: action.payload.data.images[0].url,
+        playlists: {
+          isPlaylistsFetching: false,
+          playlists: action.payload,
+        },
       };
-    case 'FETCH_FAIL':
+    case Constants.PLAYLISTS_FETCH_FAIL:
       return {
         ...state,
+        playlists: {
+          isPlaylistsFetching: false,
+        },
+        error: action.payload,
       };
-    case 'PLAYLISTS_FETCH_REQUEST':
+    case Constants.TRACKS_FETCH_REQUEST:
       return {
         ...state,
-        isFetching: true,
+        tracks: {
+          isTracksFetching: true,
+        },
         error: '',
       };
-    case 'PLAYLISTS_FETCH_SUCCESS':
+    case Constants.TRACKS_FETCH_SUCCESS:
       return {
         ...state,
-        playlists:action.payload,        
+        tracks: {
+          tracks: action.payload,
+          isTracksFetching: false,
+        },
       };
-    case 'PLAYLISTS_FETCH_FAIL':
+    case Constants.TRACKS_FETCH_FAIL:
       return {
         ...state,
+        tracks: {
+          isTracksFetching: false,
+        },
+        error: action.payload,
       };
-    case 'TRACKS_FETCH_REQUEST':
-      return {
-        ...state,
-        isFetching: true,
-        error: '',
-      };
-    case 'TRACKS_FETCH_SUCCESS':
-      return {
-        ...state,               
-      };
-    case 'TRACKS_FETCH_FAIL':
-      return {
-        ...state,
-      };
+
     // case 'REFRESH_REQUEST':
     //   return {
     //     ...state,
@@ -91,6 +146,7 @@ const reducer = (state = initialState, action) => {
     //   return {
     //     ...state,
     //   };
+
     default:
       return state;
   }
