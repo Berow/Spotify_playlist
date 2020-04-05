@@ -17,7 +17,7 @@ class Tracklist extends Component {
     });
 
     if (tracklist.length === 0) {
-      return <span>Select a item from a list</span>;
+      return <span>Выберите плейлист</span>;
     } else {
       const tracks = this.props.tracks.isTracksFetching ? <Loading /> : tracklist;
       return tracks;
