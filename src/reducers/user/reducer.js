@@ -1,7 +1,6 @@
 import { Constants } from '../../constants/constants';
 
 const initialState = {
-
   auth: {
     isAuth: false,
     isAuthFetching: false,
@@ -33,40 +32,49 @@ const reducer = (state = initialState, action) => {
     case Constants.AUTH_REQUEST:
       return {
         ...state,
+
         auth: {
+          ...state.auth,
           isAuthFetching: true,
         },
       };
     case Constants.AUTH_SUCCESS:
       return {
         ...state,
+
         auth: {
+          ...state.auth,
           isAuth: true,
           isAuthFetching: false,
           token: action.payload.token,
           refresh_token: action.payload.refresh_token,
-        }
+        },
       };
     case Constants.AUTH_FAIL:
       return {
         ...state,
+
         auth: {
+          ...state.auth,
           isAuthFetching: false,
         },
         error: action.payload.message,
-
       };
     case Constants.USER_FETCH_REQUEST:
       return {
         ...state,
+
         user: {
+          ...state.user,
           isUserFetching: true,
         },
       };
     case Constants.USER_FETCH_SUCCESS:
       return {
         ...state,
+
         user: {
+          ...state.user,
           isUserFetching: false,
           user_name: action.payload.data.display_name,
           user_img_url: action.payload.data.images[0].url,
@@ -75,8 +83,9 @@ const reducer = (state = initialState, action) => {
     case Constants.USER_FETCH_FAIL:
       return {
         ...state,
-        user: {
 
+        user: {
+          ...state.user,
           isUserFetching: false,
         },
         error: action.payload,
@@ -84,7 +93,9 @@ const reducer = (state = initialState, action) => {
     case Constants.PLAYLISTS_FETCH_REQUEST:
       return {
         ...state,
+
         playlists: {
+          ...state.playlists,
           isPlaylistsFetching: true,
         },
         error: '',
@@ -92,7 +103,9 @@ const reducer = (state = initialState, action) => {
     case Constants.PLAYLISTS_FETCH_SUCCESS:
       return {
         ...state,
+
         playlists: {
+          ...state.playlists,
           isPlaylistsFetching: false,
           playlists: action.payload,
         },
@@ -100,7 +113,9 @@ const reducer = (state = initialState, action) => {
     case Constants.PLAYLISTS_FETCH_FAIL:
       return {
         ...state,
+
         playlists: {
+          ...state.playlists,
           isPlaylistsFetching: false,
         },
         error: action.payload,
@@ -108,7 +123,9 @@ const reducer = (state = initialState, action) => {
     case Constants.TRACKS_FETCH_REQUEST:
       return {
         ...state,
+
         tracks: {
+          ...state.tracks,
           isTracksFetching: true,
         },
         error: '',
@@ -116,7 +133,9 @@ const reducer = (state = initialState, action) => {
     case Constants.TRACKS_FETCH_SUCCESS:
       return {
         ...state,
+
         tracks: {
+          ...state.tracks,
           tracks: action.payload,
           isTracksFetching: false,
         },
@@ -125,6 +144,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         tracks: {
+          ...state.tracks,
           isTracksFetching: false,
         },
         error: action.payload,

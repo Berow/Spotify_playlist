@@ -4,6 +4,7 @@ import { getUser, logout, getAllPlaylists, getPlaylistTracks } from '../../actio
 import Card from '../card/card';
 import './main.css';
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
+import Loading from '../../pic/loading.svg';
 import { history } from '../../helpers/history';
 
 import Auth from '../auth/auth';
@@ -14,49 +15,56 @@ class Main extends Component {
     if (token != '') {
       this.props.getUser(token);
       this.props.getAllPlaylists(token);
-      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/61hC2O5iJdzElqoXuvYEZj/tracks");
+      this.props.getPlaylistTracks('https://api.spotify.com/v1/playlists/61hC2O5iJdzElqoXuvYEZj/tracks');
       // const refresh_token = localStorage.getItem('refresh_token');
       // this.props.refreshToken(refresh_token);
     }
   }
 
   componentDidUpdate(prevProps) {
-
     if (this.props.isAuth !== prevProps.isAuth) {
       this.props.getUser();
       this.props.getAllPlaylists();
       // [""0""].tracks.href
-      this.props.getPlaylistTracks("https://api.spotify.com/v1/playlists/61hC2O5iJdzElqoXuvYEZj/tracks");
+      this.props.getPlaylistTracks('https://api.spotify.com/v1/playlists/61hC2O5iJdzElqoXuvYEZj/tracks');
     }
   }
 
-  renderItems(playlist) {
-    console.log(playlist);
-
+  renderPlaylist(playlist) {
     return playlist.map((item) => {
       const label = item.name;
       const id = item.id;
-      return (
-        <li key={id}>
-          {label}
-        </li>
-      )
-    })
+      return <li key={id}>{label}</li>;
+    });
+  }
+
+  renderTracks(tracks) {
+    return tracks.map((item) => {
+      const label = item.track.name;
+      const id = item.track.id;
+      return <li key={id}>{label}</li>;
+    });
   }
 
   render() {
     const name = this.props.user.user_name;
     const img = this.props.user.user_img_url;
-    console.log(this.props);    
 
-    const items = this.renderItems(this.props.playlists.playlists);
+    console.log(this.props.tracks.tracks);
+
+    const playlists = this.props.playlists.isPlaylistsFetching ? (
+      <Loading />
+    ) : (
+      this.renderPlaylist(this.props.playlists.playlists)
+    );
+    const tracks = this.props.tracks.isTracksFetching ? <Loading /> : this.renderTracks(this.props.tracks.tracks);
 
     const out = (e) => {
       this.props.logout();
     };
 
     return (
-      <Router >
+      <Router>
         <Card img={img} name={name} />
         <Switch>
           <Route
@@ -73,7 +81,9 @@ class Main extends Component {
                   <button onClick={out}>LOGOUT</button>
                 </li>
                 <hr></hr>
-                {/* {items} */}
+                {playlists}
+                <hr></hr>
+                {tracks}
               </ul>
             )}
           />
@@ -98,7 +108,6 @@ const mapStateToProps = (state) => ({
   user: state.user.user,
   playlists: state.user.playlists,
   tracks: state.user.tracks,
-
 });
 
 const mapDispatchToProps = {
