@@ -1,4 +1,4 @@
-import { spotifyServices } from '../services/spotify_service';  
+import { spotifyServices } from '../services/spotify_service';
 import { Constants } from '../constants/constants';
 
 const userAuth = (code, state) => {
@@ -61,7 +61,6 @@ const getAllPlaylists = () => {
       type: Constants.PLAYLISTS_FETCH_REQUEST,
     });
     spotifyServices.getAllPlaylists().then((items) => {
-      
       dispatch({
         type: Constants.PLAYLISTS_FETCH_SUCCESS,
         payload: items,
@@ -78,8 +77,8 @@ const getAllPlaylists = () => {
 };
 
 const getPlaylistTracks = (url) => {
-  return (dispatch) => {    
-    dispatch({      
+  return (dispatch) => {
+    dispatch({
       type: Constants.TRACKS_FETCH_REQUEST,
     });
     spotifyServices.getPlaylistTracks(url).then((items) => {
@@ -141,7 +140,10 @@ const getPlaylistTracks = (url) => {
 // };
 
 const logout = () => {
-  return () => {
+  return (dispatch) => {
+    dispatch({
+      type: Constants.USER_LOGGED_OUT,
+    });
     spotifyServices.logout();
     window.location.reload(true);
   };
