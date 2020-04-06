@@ -32,7 +32,6 @@ const reducer = (state = initialState, action) => {
     case Constants.AUTH_REQUEST:
       return {
         ...state,
-
         auth: {
           ...state.auth,
           isAuthFetching: true,
@@ -41,7 +40,6 @@ const reducer = (state = initialState, action) => {
     case Constants.AUTH_SUCCESS:
       return {
         ...state,
-
         auth: {
           ...state.auth,
           isAuth: true,
@@ -53,7 +51,6 @@ const reducer = (state = initialState, action) => {
     case Constants.AUTH_FAIL:
       return {
         ...state,
-
         auth: {
           ...state.auth,
           isAuthFetching: false,
@@ -63,7 +60,6 @@ const reducer = (state = initialState, action) => {
     case Constants.USER_FETCH_REQUEST:
       return {
         ...state,
-
         user: {
           ...state.user,
           isUserFetching: true,
@@ -72,7 +68,6 @@ const reducer = (state = initialState, action) => {
     case Constants.USER_FETCH_SUCCESS:
       return {
         ...state,
-
         user: {
           ...state.user,
           isUserFetching: false,
@@ -83,7 +78,6 @@ const reducer = (state = initialState, action) => {
     case Constants.USER_FETCH_FAIL:
       return {
         ...state,
-
         user: {
           ...state.user,
           isUserFetching: false,
@@ -93,7 +87,6 @@ const reducer = (state = initialState, action) => {
     case Constants.PLAYLISTS_FETCH_REQUEST:
       return {
         ...state,
-
         playlists: {
           ...state.playlists,
           isPlaylistsFetching: true,
@@ -103,7 +96,6 @@ const reducer = (state = initialState, action) => {
     case Constants.PLAYLISTS_FETCH_SUCCESS:
       return {
         ...state,
-
         playlists: {
           ...state.playlists,
           isPlaylistsFetching: false,
@@ -113,7 +105,6 @@ const reducer = (state = initialState, action) => {
     case Constants.PLAYLISTS_FETCH_FAIL:
       return {
         ...state,
-
         playlists: {
           ...state.playlists,
           isPlaylistsFetching: false,
@@ -123,7 +114,6 @@ const reducer = (state = initialState, action) => {
     case Constants.TRACKS_FETCH_REQUEST:
       return {
         ...state,
-
         tracks: {
           ...state.tracks,
           isTracksFetching: true,
@@ -133,7 +123,6 @@ const reducer = (state = initialState, action) => {
     case Constants.TRACKS_FETCH_SUCCESS:
       return {
         ...state,
-
         tracks: {
           ...state.tracks,
           tracks: action.payload,

@@ -1,7 +1,14 @@
 import React from 'react';
 
-const Header = ({ url }) => {
-  this.props.getPlaylistTracks(url);
-  return <div className='tracklist'></div>;
-};
+import './header.scss';
+
+const Header = ({ name, img }) => {
+
+    return (
+        <div className="header">
+            <img className='avatar' src={img} alt={name}></img>
+            <div>{name}</div >
+        </div >
+    )
+}
 export default Header;

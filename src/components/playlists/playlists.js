@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllPlaylists, getPlaylistTracks } from '../../actions/actions';
 import Loading from '../../pic/loading.svg';
+import './playlists.scss'
 
 class Playlists extends Component {
   componentDidMount() {
@@ -38,7 +39,7 @@ class Playlists extends Component {
       this.renderPlaylist(this.props.playlists.playlists)
     );
 
-    return <React.Fragment>{playlists}</React.Fragment>;
+    return <div className='playlists'>{playlists}</div>;
   }
 }
 

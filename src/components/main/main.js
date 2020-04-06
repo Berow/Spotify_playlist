@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser, logout } from '../../actions/actions';
-import Card from '../card/card';
-import './main.css';
+import Header from '../header/header';
+import './main.scss';
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
 import Loading from '../../pic/loading.svg';
 import { history } from '../../helpers/history';
@@ -31,7 +31,7 @@ class Main extends Component {
 
     return (
       <Router>
-        <Card img={img} name={name} />
+        <Header img={img} name={name} />
         <Switch>
           <Route
             path='/'
