@@ -36,8 +36,8 @@ class Tracklist extends Component {
   }
 
   render() {
-    let placeholder = <h2 className='placeholder'>Выберите плейлист</h2>
-    if (this.props.tracks.tracks.lenght === 0 || this.props.tracks.isTracksFetching)
+    let placeholder = <h2 className='placeholder'>Выберите плейлист</h2>;
+    if ( this.props.tracks.isTracksFetching)
       placeholder = null;
 
     const list = this.renderTracks(this.props.tracks.tracks);

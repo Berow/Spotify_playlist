@@ -28,7 +28,7 @@ body {
 
 *:focus {
   outline: none;
-}  
+}
 
 ul,
 ol {
@@ -55,10 +55,11 @@ h1 {
   font-size: 32px;
 }
 
-
 //--------------------------------------------------
 
-#root {
+.container {
   display: grid;
   grid-template-columns: 20% 80%;
+  height: 100vh;
+  grid-row: auto;
 }

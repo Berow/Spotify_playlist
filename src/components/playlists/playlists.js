@@ -6,7 +6,8 @@ import './playlists.scss'
 
 class Playlists extends Component {
   componentDidMount() {
-    if (this.props.auth.isAuth || localStorage.getItem('token') != '') {
+    const token = localStorage.getItem('token');
+    if (token) {
       this.props.getAllPlaylists();
     }
   }
