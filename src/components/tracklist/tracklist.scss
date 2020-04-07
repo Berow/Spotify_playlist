@@ -1,4 +1,35 @@
-.tracklist{
-    background-color: #282C2F;
-    color: rgb(157, 158, 160);
+@import "../../style/variables.scss";
+
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 0;
+}
+
+h3 {
+    color: $color-light-font;
+}
+
+.placeholder {
+    color: $color-light-font;
+    align-self: center;
+    justify-self: center;
+    justify-self: center;
+}
+
+.tracklist {
+    color: $color-white;
+    display: flex;
+    flex-direction: column;
+}
+
+.track {
+    padding: 1rem;
+    &:hover,
+    &:active {
+        background-color: $color-light-font;
+        cursor: default;
+    }
 }

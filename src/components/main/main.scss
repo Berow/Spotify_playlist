@@ -1,3 +1,64 @@
-body {    
-    font-family: Rubik;
-  }
+@import "../../style/variables.scss";
+
+//----GLOBAL----
+body {
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
+}
+
+body,
+input,
+textarea,
+select,
+button {
+  font-family: "Rubik", Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+  background-color: $color-darkgray;
+}
+
+*:focus {
+  outline: none;
+}  
+
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+
+//--------------------------------------------------
+
+#root {
+  display: grid;
+  grid-template-columns: 20% 80%;
+}

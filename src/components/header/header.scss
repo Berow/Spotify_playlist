@@ -1,3 +1,20 @@
+@import "../../style/variables.scss";
+
+.header {
+    display: flex;    
+    position: sticky;
+    top:0;
+    align-items: center;
+    // justify-content: center;
+}
+
+.name{
+    margin-left: 0.5rem;
+    color: $color-white;
+}
 .avatar {
     border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 1.5rem;
 }

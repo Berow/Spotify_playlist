@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser, logout } from '../../actions/actions';
-import Header from '../header/header';
-import './main.scss';
 import { BrowserRouter as Router, Route, Switch, Redirect, Link, withRouter } from 'react-router-dom';
-import Loading from '../../pic/loading.svg';
-import { history } from '../../helpers/history';
 
 import Auth from '../auth/auth';
+import Header from '../header/header';
 import Tracklist from '../tracklist/tracklist';
 import Playlists from '../playlists/playlists';
+import './main.scss';
 
 class Main extends Component {
   componentDidMount() {
@@ -46,15 +44,14 @@ class Main extends Component {
                 <li>
                   <button onClick={out}>LOGOUT</button>
                 </li>
-                <hr></hr>
-                <Playlists />
-                <hr></hr>
-                <Tracklist />
               </ul>
             )}
           />
           <Route path='/auth' exact component={Auth} />
         </Switch>
+        
+        <Playlists />        
+        <Tracklist />
       </Router>
     );
   }

@@ -25,7 +25,7 @@ class Playlists extends Component {
       const id = item.id;
       const url = item.tracks.href;
       return (
-        <li key={id} onClick={() => this.props.getPlaylistTracks(url)}>
+        <li key={id} className='playlist' onClick={() => this.props.getPlaylistTracks(url)}>
           {label}
         </li>
       );
@@ -36,10 +36,17 @@ class Playlists extends Component {
     const playlists = this.props.playlists.isPlaylistsFetching ? (
       <Loading />
     ) : (
-      this.renderPlaylist(this.props.playlists.playlists)
-    );
+        this.renderPlaylist(this.props.playlists.playlists)
+      );
 
-    return <div className='playlists'>{playlists}</div>;
+    return <div className='playlists'>
+      <div className='sticky'>
+        <h3>Плейлисты</h3>
+        <ul>
+          {playlists}
+        </ul>
+      </div>
+    </div>;
   }
 }
 
