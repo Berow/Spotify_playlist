@@ -18,8 +18,7 @@ class Main extends Component {
   }
 
   render() {
-    const name = this.props.user.user_name;
-    const img = this.props.user.user_img_url;
+
 
     // console.log(this.props.tracks.tracks);
 
@@ -30,7 +29,7 @@ class Main extends Component {
     return (
       <div className='container'>
         <Router>
-          <Header img={img} name={name} />
+          <Header />
           <Switch>
             <Route
               path='/'

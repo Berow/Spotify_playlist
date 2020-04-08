@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getPlaylistTracks } from '../../actions/actions';
 import Loading from '../../pic/loading.svg';
-import './tracklist.scss'
+import './tracklist.scss';
+
+function msToMinAndSec(ms) {
+  const minutes = Math.floor(ms / 60000);
+  const seconds = ((ms % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+}
 
 class Tracklist extends Component {
   componentDidUpdate(prevProps) {
@@ -11,19 +17,28 @@ class Tracklist extends Component {
     }
   }
   renderTracks(data) {
+    console.log(data)
     const tracklist = data.map((item) => {
-      const label = item.track.name;
+      const trackName = <div className='trackname'>{item.track.name}</div>;
+      const albumName = <div className='albumname'>{item.track.album.name}</div>;
+
+      const artists = <div className='artists'>{item.track.artists.map((artist) => <span>{`${artist.name} `}</span>)}</div>;
+      const duration = <div className='duration'>{msToMinAndSec(item.track.duration_ms)}</div>;
       const id = item.track.id;
-      return <React.Fragment> <li key={id} className='track'>
-        {label}
+      return <React.Fragment><li key={id} className='track'>
+        <div className='firstline'>
+          {trackName}
+          {duration}
+        </div>
+        <div className='secondline'>
+          {artists}
+          <span className='separator'>•</span>
+          {albumName}
+        </div>
       </li>
         <hr />
       </React.Fragment>
     });
-
-    // if (tracklist.length === 0) {
-    //   return <span>Выберите плейлист</span>;
-    // } else 
 
     const tracks = this.props.tracks.isTracksFetching ? <Loading /> : tracklist;
 
@@ -37,18 +52,17 @@ class Tracklist extends Component {
 
   render() {
     let placeholder = <h2 className='placeholder'>Выберите плейлист</h2>;
-    if ( this.props.tracks.isTracksFetching)
+    if (this.props.tracks.tracks.length != 0 || this.props.tracks.isTracksFetching) {
       placeholder = null;
-
+    }
     const list = this.renderTracks(this.props.tracks.tracks);
 
-    return <div className='tracklist'>      
+    return <div className='tracklist'>
       {list}
       {placeholder}
     </div>;
   }
 }
-
 
 const mapStateToProps = (state) => ({
   tracks: state.user.tracks,

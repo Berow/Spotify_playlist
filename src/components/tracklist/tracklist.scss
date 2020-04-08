@@ -12,23 +12,77 @@ h3 {
     color: $color-light-font;
 }
 
+.duration {
+    text-align: right;
+    padding-right: 2em;
+    width: 4em;
+    font-size: 16px;
+    line-height: 22px;
+    flex-basis: content;
+    flex-shrink: 0;
+    
+}
+
 .placeholder {
     color: $color-light-font;
     align-self: center;
-    justify-self: center;    
+    justify-self: center;
 }
 
 .tracklist {
     color: $color-white;
+    // display: flex;
+    // flex-direction: column;
+}
+
+.artists {
+    color: #fff;
+    opacity: 0.6;
+    font-size: 12px;
+}
+
+.trackname {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-right: 1px;
+    margin-right: -1px;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.015em;
+    flex: 1 1 0;
+}
+
+.albumname {
+    color: #fff;
+    opacity: 0.6;
+    font-size: 12px;
+}
+
+.separator {
+    color: #fff;
+    opacity: 0.6;
+    display: inline-block;
+    padding: 0 8px;
+    font-size: 0.8em;
+}
+.firstline {
     display: flex;
-    flex-direction: column;
+}
+.secondline {
+    display: flex;
 }
 
 .track {
+    display: flex;
     padding: 1rem;
+    flex-wrap: wrap;
+    padding: 0.7rem;
+    flex-direction: column;
+
     &:hover,
     &:active {
-        background-color: $color-light-font;
+        background-color: hsla(0, 0%, 100%, 0.1);
         cursor: default;
     }
 }
