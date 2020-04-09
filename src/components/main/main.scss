@@ -57,8 +57,11 @@ h1 {
 
 .container {
   display: grid;
+  grid-template:
+    "header tracklist"
+    "playlists tracklist";
   grid-template-columns: minmax(200px, 20%) 80%;
   grid-template-rows: minmax(70px, 70px) auto;
-  // height: 100vh;
+
   background-color: $color-darkgray;
 }

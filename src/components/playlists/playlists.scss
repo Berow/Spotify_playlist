@@ -1,9 +1,9 @@
 @import "../../style/variables.scss";
 
 .playlists {
-    
+    grid-area: playlists;
     color: $color-light-font;
-    margin-left: 1.5rem;    
+    margin-left: 1.5rem;
 }
 
 .sticky {

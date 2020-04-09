@@ -40,6 +40,7 @@ const getUser = () => {
       type: Constants.USER_FETCH_REQUEST,
     });
     spotifyServices.getUser().then((response) => {
+      console.log(response);
       dispatch({
         type: Constants.USER_FETCH_SUCCESS,
         payload: response,
