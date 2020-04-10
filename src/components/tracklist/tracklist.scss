@@ -1,82 +1,83 @@
-@import "../../style/variables.scss";
+@import '../../style/variables.scss';
 
 .tracklist {
-    grid-area: tracklist;
+  grid-area: tracklist;
 }
 
 hr {
-    border: 0;
-    height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    margin: 0;
+  border: 0;
+  height: 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 0;
+  max-width: 105rem;
 }
 
 h3 {
-    color: $color-light-font;
+  color: $color-light-font;
 }
 
 .duration {
-    padding-right: 2rem;
-    min-width: 4rem;
-    font-size: 16px;
-    color: $color-white;
-    line-height: 64px;
-    text-align: center;
-    flex: 0 0;
+  padding-right: 2rem;
+  min-width: 4rem;
+  font-size: 16px;
+  color: $color-white;
+  line-height: 64px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .placeholder {
-    color: $color-light-font;
-    align-self: center;
-    justify-self: center;
+  color: $color-light-font;
+  align-self: center;
+  justify-self: center;
 }
 
 .track {
-    display: flex;
+  display: flex;
+  max-width: 105rem;
 
-    &:hover,
-    &:active {
-        background-color: hsla(0, 0%, 100%, 0.1);
-        cursor: default;
-    }
+  &:hover,
+  &:active {
+    background-color: hsla(0, 0%, 100%, 0.1);
+    cursor: default;
+  }
 }
 
 .trackname {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    padding-right: 1px;
-    margin-right: -1px;
-    font-size: 16px;
-    line-height: 22px;
-    color: $color-white;
-    flex: 1 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 1px;
+  margin-right: -1px;
+  font-size: 16px;
+  line-height: 22px;
+  color: $color-white;
 }
 
 .separator {
-    display: inline-block;
-    padding: 0 0.5rem;
-    font-size: 0.8rem;
+  display: inline-block;
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
 }
 
 .secondline {
-    display: flex;
-    color: $color-white;
-    opacity: 0.6;
-    font-size: 12px;
-    flex: 0 0;
+  display: flex;
+  color: $color-white;
+  opacity: 0.6;
+  font-size: 12px;
 }
 
 .wrapper {
-    display: flex;
-    padding: 1rem;
-    flex-wrap: wrap;
-    padding: 0.7rem;
-    flex-direction: column;
-    flex: 1 0;
+  display: flex;
+  padding: 1rem;
+  flex-wrap: wrap;
+  padding: 0.7rem;
+  flex-direction: column;
+  flex: 1 1;
+  max-width: 100rem;
 }
 
 .image {
-    flex: 0 0;
+  flex-shrink: 0;
 }
