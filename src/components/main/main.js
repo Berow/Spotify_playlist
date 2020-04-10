@@ -21,7 +21,6 @@ class Main extends Component {
     return (
       <div className='container'>
         <Router>
-
           <Switch>
             <Route path='/' exact
               render={() => (
