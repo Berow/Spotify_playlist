@@ -1,97 +1,94 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/actions';
-import Button from '../button/button'
+import Modal from '../modal/modal';
 
 import './header.scss';
 
 class Header extends Component {
-    componentDidMount() {
-        const token = localStorage.getItem('token');
+  state = {
+    showMenu: false,
+  };
 
-        if (!token) {
-            console.log(token);
-            setTimeout(() => {
-                this.login();
-            }, 2500);
-        }
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.log(token);
+      setTimeout(() => {
+        this.login();
+      }, 1500);
     }
+  }
 
-    closeModal = (e) => {
-        const modal = document.querySelector(".modal");
-        const backdrop = document.querySelector(".backdrop");
-        const tracklist = document.querySelector(".tracklist");
-        const playlists = document.querySelector(".playlists");
-        const header = document.querySelector(".header");
+  login = (e) => {
+    const modal = document.querySelector('.modal');
+    const backdrop = document.querySelector('.backdrop');
+    const tracklist = document.querySelector('.tracklist');
+    const playlists = document.querySelector('.playlists');
+    const header = document.querySelector('.header');
 
-        modal.classList.remove("open");
-        tracklist.classList.remove("blur");
-        playlists.classList.remove("blur");
-        header.classList.remove("blur");
+    modal.classList.add('open');
+    tracklist.classList.add('blur');
+    playlists.classList.add('blur');
+    header.classList.add('blur');
 
-        backdrop.style.display = "none";
-        setTimeout(() => {
-            backdrop.classList.remove("open");
-        }, 10);
-    }
+    backdrop.style.display = 'block';
+    setTimeout(() => {
+      backdrop.classList.add('open');
+    }, 10);
+  };
 
-    login = (e) => {
-        const modal = document.querySelector(".modal");
-        const backdrop = document.querySelector(".backdrop");
-        const tracklist = document.querySelector(".tracklist");
-        const playlists = document.querySelector(".playlists");
-        const header = document.querySelector(".header");
+  out = (e) => {
+    this.props.logout();
+  };
 
-        modal.classList.add("open");
-        tracklist.classList.add("blur");
-        playlists.classList.add("blur");
-        header.classList.add("blur");
+  render() {
+    const name = this.props.user.user_name;
+    const img = this.props.user.user_img_url;
+    const header = (
+      <ul
+        className='menu'
+        onMouseEnter={() => this.setState({ showMenu: true })}
+        onMouseLeave={() => this.setState({ showMenu: false })}
+      >
+        <li className='card'>
+          <img className='avatar' src={img} alt={name}></img>
+          <div className='name'>{name}</div>
+        </li>
 
-        backdrop.style.display = "block";
-        setTimeout(() => {
-            backdrop.classList.add("open");
-        }, 10);
-    };
+        {this.state.showMenu && (
+          <li>
+            <hr />
+            <a className='logout' onClick={this.out}>
+              LOGOUT
+            </a>
+          </li>
+        )}
+      </ul>
+    );
 
-    out = (e) => {
-        this.props.logout();
-    };
+    const login = localStorage.getItem('token') ? (
+      header
+    ) : (
+      <a className='login' onClick={this.login}>
+        LOGIN
+      </a>
+    );
 
-    render() {
-        const name = this.props.user.user_name;
-        const img = this.props.user.user_img_url;
-        const header = <React.Fragment>
-            <img className='avatar' src={img} alt={name}></img>
-            <div className='name'>{name}</div>
-            <button onClick={this.out}>LOGOUT</button>
-        </React.Fragment>
+    return (
+      <React.Fragment>
+        <Modal />
 
-
-        const login = localStorage.getItem('token') ? header : <button onClick={this.login}>LOGIN</button>;
-
-
-        return (
-            <React.Fragment>
-                <div
-                    className='backdrop' onClick={this.closeModal}>
-                </div>
-                <div className='modal'>
-                    <h2>Do you want to continue?</h2>
-                    <Button />
-                </div>
-
-                <div className="header">
-                    {login}
-                </div>
-            </React.Fragment >
-
-        )
-    }
+        <div className='header'>{login}</div>
+      </React.Fragment>
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
-    user: state.user.user,
-    auth: state.user.auth,
+  user: state.user.user,
+  auth: state.user.auth,
 });
 
 const mapDispatchToProps = { logout: logout };

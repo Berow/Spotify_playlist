@@ -10,12 +10,27 @@ function msToMinAndSec(ms) {
   return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 }
 
+function getRandomString() {
+  const chars = ['A', '#'];
+  const length = 10;
+  let mask = '';
+  if (chars.includes('a')) mask += 'abcdefghijklmnopqrstuvwxyz';
+  if (chars.includes('A')) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if (chars.includes('#')) mask += '0123456789';
+  if (chars.includes('!')) mask += '~`!@#$%^&*()_+-={}[]:";\'<>?,./|\\';
+
+  let result = '';
+  for (let i = 0; i < length; i = i + 1) result += mask[Math.floor(Math.random() * mask.length)];
+  return result;
+}
+
 class Tracklist extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.tracks.tracks !== prevProps.tracks.tracks) {
       this.renderTracks(this.props.tracks.tracks);
     }
   }
+
   renderTracks(data) {
     console.log(data);
     const tracklist = data.map((item) => {
@@ -26,7 +41,7 @@ class Tracklist extends Component {
       const artists = (
         <div className='artists'>
           {item.track.artists.map((artist, index) => (
-            <span>
+            <span key={getRandomString()}>
               {`${artist.name}`}
               {index < item.track.artists.length - 1 ? ',\u00A0' : ''}
             </span>
@@ -34,11 +49,10 @@ class Tracklist extends Component {
         </div>
       );
       const duration = <div className='duration'>{msToMinAndSec(item.track.duration_ms)}</div>;
-      const id = item.track.id;
 
       return (
-        <React.Fragment>
-          <li key={id} className='track'>
+        <React.Fragment key={getRandomString()}>
+          <li className='track'>
             {image}
             <div className='wrapper'>
               <div className='firstline'>{trackName}</div>

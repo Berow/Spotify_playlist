@@ -1,15 +1,16 @@
-.button {
-    color: white;
-    background: #08792c;
-    padding: 10px;
-    border-radius: 30px;
-    outline: none;
-    cursor: default;
-    letter-spacing: 2px;
+@import '../../style/variables.scss';
 
-    &:hover,
-    &:active {
-        background-color: hsla(0, 0%, 100%, 0.1);
-        
-    }
+.button {
+  color: white;
+  background: $color-green;
+  padding: 10px;
+  border-radius: 30px;
+  outline: none;
+  cursor: default;
+  letter-spacing: 2px;
+
+  &:hover,
+  &:active {
+    background-color: hsla(0, 0%, 100%, 0.1);
+  }
 }

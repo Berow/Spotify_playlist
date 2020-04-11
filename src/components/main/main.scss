@@ -1,4 +1,4 @@
-@import "../../style/variables.scss";
+@import '../../style/variables.scss';
 
 //----GLOBAL----
 body {
@@ -14,7 +14,7 @@ input,
 textarea,
 select,
 button {
-  font-family: "Rubik", Helvetica, Arial, sans-serif;
+  font-family: 'Rubik', Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -58,8 +58,8 @@ h1 {
 .container {
   display: grid;
   grid-template:
-    "header tracklist"
-    "playlists tracklist";
+    'header tracklist'
+    'playlists tracklist';
   grid-template-columns: minmax(200px, 20%) 80%;
   grid-template-rows: minmax(70px, 70px) auto;
 

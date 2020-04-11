@@ -1,70 +1,79 @@
-@import "../../style/variables.scss";
+@import '../../style/variables.scss';
 
 .header {
-    display: flex;
-    position: sticky;
-    top: 0;
-    align-items: center;
-    grid-area: header;
-    // justify-content: center;
+  display: flex;
+  position: sticky;
+  top: 0;
+  align-items: center;
+  grid-area: header;
+  // justify-content: center;
+}
+
+.card {
+  display: flex;
+  align-items: center;
+}
+
+.menu {
+  display: flex;
+  position: absolute;
+  top: 0;
+  flex-direction: column;
+  margin-left: 1.5rem;
+  border-radius: 20px;
+  padding: 0.3rem 1rem;
+  &:hover,
+  &:active {
+    background-color: hsla(0, 0%, 100%, 0.1);
+    cursor: default;
+  }
 }
 
 .name {
-    margin-left: 0.5rem;
-    color: $color-white;
+  margin-left: 0.5rem;
+  color: $color-white;
 }
 .avatar {
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    margin-left: 1.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
 }
 
-.modal {
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-items: center;
-    color: $color-light-font;
-    opacity: 0;
-    -webkit-transform: translateY(-20rem);
-    -ms-transform: translateY(-20rem);
-    transform: translateY(-20rem);
-    -webkit-transition: opacity 200ms ease-out, -webkit-transform 300ms ease-out;
-    transition: opacity 200ms ease-out, -webkit-transform 300ms ease-out;
-    -o-transition: opacity 200ms ease-out, transform 300ms ease-out;
-    transition: opacity 200ms ease-out, transform 300ms ease-out;
-    transition: opacity 200ms ease-out, transform 300ms ease-out, -webkit-transform 300ms ease-out;
-    z-index: 200;
-    top: 20%;
-    left: 30%;
-    width: 40%;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    background-color: $color-font;
+.logout {
+  display: flex;
+  justify-content: center;
+  color: $color-white;
+  padding: 0.5rem;
+  &:hover,
+  &:active {
+    background-color: hsla(0, 0%, 100%, 0.3);
+    cursor: default;
+  }
+}
+
+.login {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  margin-left: 3rem;
+  border-radius: 20px;
+  padding: 1rem;
+  color: $color-white;
+  border: $color-white solid 1px;
+  letter-spacing: 1px;
+  &:hover,
+  &:active {
+    background-color: hsla(0, 0%, 100%, 0.1);
+    cursor: default;
+  }
 }
 
 //-----BLUR-------
 .open {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-.backdrop {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    z-index: 100;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    transition: opacity 0.2s linear;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 .blur {
-    filter: blur(4px);
+  filter: blur(4px);
 }

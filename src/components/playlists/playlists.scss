@@ -1,21 +1,21 @@
-@import "../../style/variables.scss";
+@import '../../style/variables.scss';
 
 .playlists {
-    grid-area: playlists;
-    color: $color-light-font;
-    margin-left: 1.5rem;
+  grid-area: playlists;
+  color: $color-light-font;
+  margin-left: 1.5rem;
 }
 
 .sticky {
-    position: sticky;
-    top: 60px;
+  position: sticky;
+  top: 89px;
 }
 
 .playlist {
-    padding: 0.3rem;
-    &:hover,
-    &:active {
-        color: $color-white;
-        cursor: default;
-    }
+  padding: 0.3rem;
+  &:hover,
+  &:active {
+    color: $color-white;
+    cursor: default;
+  }
 }
