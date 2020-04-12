@@ -78,6 +78,33 @@ h3 {
   max-width: 100rem;
 }
 
-.image {
+.track-image {
   flex-shrink: 0;
+}
+
+.tracklist-header {
+  color: $color-white;
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.playlist-image {
+  width: 320px;
+  height: 320px;
+}
+
+.tracklist-header_wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+}
+
+.playlist-description {
+  opacity: 0.6;
+  margin-top: 2rem;
+}
+
+.playlist-trackcount {
+  opacity: 0.6;
+  margin-top: 2rem;
 }

@@ -70,30 +70,30 @@ function logout() {
 async function getUser() {
   const res = await getData('https://api.spotify.com/v1/me/');
   return res;
-};
+}
 
 async function getAllPlaylists() {
   const res = await getData('https://api.spotify.com/v1/me/playlists');
   console.log(res.data.items);
   return res.data.items;
-};
+}
 
 async function getPlaylistTracks(url) {
   const tracks = [];
   let res = await getData(url);
-  res.data.items.forEach(item => {
-    tracks.push(item)
-  });  
+  res.data.items.forEach((item) => {
+    tracks.push(item);
+  });
 
   while (res.data.next !== null) {
     res = await getData(res.data.next);
-    res.data.items.forEach(item => {
-      tracks.push(item)
+    res.data.items.forEach((item) => {
+      tracks.push(item);
     });
-  } 
+  }
 
   return tracks;
-};
+}
 
 function refreshToken(refreshToken) {
   const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';

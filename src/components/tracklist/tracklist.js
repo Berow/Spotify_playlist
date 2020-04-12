@@ -31,12 +31,44 @@ class Tracklist extends Component {
     }
   }
 
-  renderTracks(data) {
-    console.log(data);
-    const tracklist = data.map((item) => {
+  playPreview(url) {
+    new Audio(url).play();
+  }
+
+  renderHeader() {
+    console.log(this.props);
+    const playlistImage = (
+      <img
+        className='playlist-image'
+        src={this.props.tracks.playlist.images[0].url}
+        alt={this.props.tracks.playlist.name}
+      ></img>
+    );
+    const playlistName = <h1>{this.props.tracks.playlist.name}</h1>;
+    const playlistDescription = <p className='playlist-description'>{this.props.tracks.playlist.description}</p>;
+    const playlistTrackCount = <p className='playlist-trackcount'>{this.props.tracks.playlist.tracks.total} SONGS</p>;
+    return (
+      <React.Fragment>
+        <div className='tracklist-header'>
+          {playlistImage}
+          <div className='tracklist-header_wrapper'>
+            {playlistName}
+            {playlistDescription}
+            {playlistTrackCount}
+          </div>
+        </div>
+        <hr />
+      </React.Fragment>
+    );
+  }
+
+  renderTracks() {
+    console.log(this.props);
+    const tracklist = this.props.tracks.tracks.map((item) => {
       const trackName = <div className='trackname'>{item.track.name}</div>;
       const albumName = <div className='albumname'>{item.track.album.name}</div>;
-      const image = <img className='image' src={item.track.album.images[2].url} alt={item.track.name}></img>;
+      const image = <img className='track_image' src={item.track.album.images[2].url} alt={item.track.name}></img>;
+      const preview = item.track.preview_url;
 
       const artists = (
         <div className='artists'>
@@ -48,11 +80,12 @@ class Tracklist extends Component {
           ))}
         </div>
       );
+
       const duration = <div className='duration'>{msToMinAndSec(item.track.duration_ms)}</div>;
 
       return (
         <React.Fragment key={getRandomString()}>
-          <li className='track'>
+          <li className='track' onClick={() => this.playPreview(preview)}>
             {image}
             <div className='wrapper'>
               <div className='firstline'>{trackName}</div>
@@ -70,28 +103,30 @@ class Tracklist extends Component {
     });
 
     const tracks = this.props.tracks.isTracksFetching ? <Loading /> : tracklist;
+    console.log(this.props.tracks.playlist);
+    const header = !this.props.tracks.playlist || this.props.tracks.playlist.length != 0 ? this.renderHeader() : null;
 
     return (
       <React.Fragment>
-        <h3>Треки</h3>
+        {header}
+
         <ul>{tracks}</ul>
       </React.Fragment>
     );
   }
 
   render() {
-    let placeholder = <h2 className='placeholder'>Выберите плейлист</h2>;
-    if (this.props.tracks.tracks.length != 0 || this.props.tracks.isTracksFetching) {
-      placeholder = null;
-    }
-    const list = this.renderTracks(this.props.tracks.tracks);
+    // let placeholder = <h2 className='placeholder'>Выберите плейлист</h2>;
+    // if (this.props.tracks.tracks.length != 0 || this.props.tracks.isTracksFetching) {
+    //   placeholder = null;
+    // }
+    // const list = this.renderTracks();
 
-    return (
-      <div className='tracklist'>
-        {list}
-        {placeholder}
-      </div>
-    );
+    let list = <h2 className='placeholder'>Выберите плейлист</h2>;
+    if (this.props.tracks.tracks.length != 0 || this.props.tracks.isTracksFetching) {
+      list = this.renderTracks();
+    }
+    return <div className='tracklist'>{list}</div>;
   }
 }
 

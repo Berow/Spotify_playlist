@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getAllPlaylists, getPlaylistTracks } from '../../actions/actions';
 import Loading from '../../pic/loading.svg';
-import './playlists.scss'
+import './playlists.scss';
 
 class Playlists extends Component {
   componentDidMount() {
@@ -26,7 +26,7 @@ class Playlists extends Component {
       const id = item.id;
       const url = item.tracks.href;
       return (
-        <li key={id} className='playlist' onClick={() => this.props.getPlaylistTracks(url)}>
+        <li key={id} className='playlist' onClick={() => this.props.getPlaylistTracks(url, item)}>
           {label}
         </li>
       );
@@ -37,17 +37,17 @@ class Playlists extends Component {
     const playlists = this.props.playlists.isPlaylistsFetching ? (
       <Loading />
     ) : (
-        this.renderPlaylist(this.props.playlists.playlists)
-      );
+      this.renderPlaylist(this.props.playlists.playlists)
+    );
 
-    return <div className='playlists'>
-      <div className='sticky'>
-        <h3>Плейлисты</h3>
-        <ul>
-          {playlists}
-        </ul>
+    return (
+      <div className='playlists'>
+        <div className='sticky'>
+          <h3>Плейлисты</h3>
+          <ul>{playlists}</ul>
+        </div>
       </div>
-    </div>;
+    );
   }
 }
 

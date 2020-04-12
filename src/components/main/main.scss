@@ -58,10 +58,20 @@ h1 {
 .container {
   display: grid;
   grid-template:
-    'header tracklist'
-    'playlists tracklist';
-  grid-template-columns: minmax(200px, 20%) 80%;
-  grid-template-rows: minmax(70px, 70px) auto;
+    'header '
+    'playlists '
+    'tracklist';
+
+  grid-template-columns: 100%;
 
   background-color: $color-darkgray;
+
+  @media (min-width: 40rem) {
+    display: grid;
+    grid-template:
+      'header tracklist'
+      'playlists tracklist';
+    grid-template-columns: minmax(200px, 20%) 80%;
+    grid-template-rows: minmax(70px, 70px) auto;
+  }
 }

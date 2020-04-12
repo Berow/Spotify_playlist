@@ -77,7 +77,7 @@ const getAllPlaylists = () => {
   };
 };
 
-const getPlaylistTracks = (url) => {
+const getPlaylistTracks = (url, playlist) => {
   return (dispatch) => {
     dispatch({
       type: Constants.TRACKS_FETCH_REQUEST,
@@ -85,7 +85,7 @@ const getPlaylistTracks = (url) => {
     spotifyServices.getPlaylistTracks(url).then((items) => {
       dispatch({
         type: Constants.TRACKS_FETCH_SUCCESS,
-        payload: items,
+        payload: { items, playlist },
       });
       (error) => {
         dispatch({

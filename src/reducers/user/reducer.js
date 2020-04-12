@@ -22,6 +22,7 @@ const initialState = {
   tracks: {
     isTracksFetching: false,
     tracks: [],
+    playlist: [],
   },
 
   error: '',
@@ -125,7 +126,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         tracks: {
           ...state.tracks,
-          tracks: action.payload,
+          tracks: action.payload.items,
+          playlist: action.payload.playlist,
           isTracksFetching: false,
         },
       };
