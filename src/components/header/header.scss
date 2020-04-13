@@ -1,12 +1,19 @@
-@import '../../style/variables.scss';
+@import "../../style/variables.scss";
 
 .header {
   display: flex;
-  position: sticky;
-  top: 0;
   align-items: center;
   grid-area: header;
-  // justify-content: center;
+  height: 70px;
+
+  @media (min-width: 40rem) {
+    display: flex;
+    position: fixed;
+    top: 0;
+    align-items: center;
+    grid-area: header;
+    height: 70px;
+  }
 }
 
 .card {

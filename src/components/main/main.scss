@@ -61,9 +61,6 @@ h1 {
     'header '
     'playlists '
     'tracklist';
-
-  grid-template-columns: 100%;
-
   background-color: $color-darkgray;
 
   @media (min-width: 40rem) {

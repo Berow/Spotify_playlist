@@ -41,12 +41,10 @@ class Playlists extends Component {
     );
 
     return (
-      <div className='playlists'>
-        <div className='sticky'>
+      <div className='playlists'>        
           <h3>Плейлисты</h3>
           <ul>{playlists}</ul>
-        </div>
-      </div>
+        </div>      
     );
   }
 }

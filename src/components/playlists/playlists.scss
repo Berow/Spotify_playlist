@@ -1,14 +1,22 @@
-@import '../../style/variables.scss';
+@import "../../style/variables.scss";
 
 .playlists {
   grid-area: playlists;
   color: $color-light-font;
   margin-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 40rem) {
+    position: fixed;
+    top: 70px;
+    grid-area: playlists;
+    color: $color-light-font;
+    margin-left: 1.5rem;
+  }
 }
 
-.sticky {
-  position: sticky;
-  top: 89px;
+.playlist-wrap {
 }
 
 .playlist {

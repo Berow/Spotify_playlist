@@ -1,4 +1,4 @@
-@import '../../style/variables.scss';
+@import "../../style/variables.scss";
 
 .tracklist {
   grid-area: tracklist;
@@ -83,20 +83,42 @@ h3 {
 }
 
 .tracklist-header {
-  color: $color-white;
   display: flex;
+  flex-direction: column;
+  color: $color-white;
   margin-bottom: 1rem;
+  align-items: center;
+  
+  @media (min-width: 40rem) {
+    color: $color-white;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    align-items: center;
+    
+  }
 }
 
 .playlist-image {
-  width: 320px;
-  height: 320px;
+  width: 100%;
+  @media (min-width: 40rem) {
+  width: 20%;
+  height: 20%;
+  flex-shrink: 1;
+  }
 }
 
 .tracklist-header_wrapper {
   display: flex;
   flex-direction: column;
   margin: 1rem;
+  align-items: center;
+  @media (min-width: 40rem) {
+    color: $color-white;
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: flex-start;
+    
+  }
 }
 
 .playlist-description {
