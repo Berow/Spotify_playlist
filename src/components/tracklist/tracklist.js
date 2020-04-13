@@ -25,15 +25,17 @@ function getRandomString() {
 }
 
 class Tracklist extends Component {
+  /*
   componentDidUpdate(prevProps) {
     if (this.props.tracks.tracks !== prevProps.tracks.tracks) {
       this.renderTracks(this.props.tracks.tracks);
     }
   }
+  */
 
-  playPreview(url) {
-    new Audio(url).play();
-  }
+  // playPreview(url) {
+  //   new Audio(url).play();
+  // }
 
   renderHeader() {
     console.log(this.props);
@@ -45,7 +47,14 @@ class Tracklist extends Component {
       ></img>
     );
     const playlistName = <h1>{this.props.tracks.playlist.name}</h1>;
-    const playlistDescription = <p className='playlist-description'>{this.props.tracks.playlist.description}</p>;
+    const playlistDescription = (
+      <p
+        className='playlist-description'
+        dangerouslySetInnerHTML={{
+          __html: this.props.tracks.playlist.description,
+        }}
+      ></p>
+    );
     const playlistTrackCount = <p className='playlist-trackcount'>{this.props.tracks.playlist.tracks.total} SONGS</p>;
     return (
       <React.Fragment>
@@ -63,12 +72,19 @@ class Tracklist extends Component {
   }
 
   renderTracks() {
-    console.log(this.props);
-    const tracklist = this.props.tracks.tracks.map((item) => {
+    console.log(this.props.tracks.tracks);
+    const tracklist = this.props.tracks.tracks.map((item, index) => {
       const trackName = <div className='trackname'>{item.track.name}</div>;
       const albumName = <div className='albumname'>{item.track.album.name}</div>;
-      const image = <img className='track_image' src={item.track.album.images[2].url} alt={item.track.name}></img>;
-      const preview = item.track.preview_url;
+
+      const image = (
+        <img
+          className='track_image'
+          src={item.track.album.images[2] && item.track.album.images[2].url}
+          alt={item.track.name}
+        ></img>
+      );
+      // const preview = item.track.preview_url;
 
       const artists = (
         <div className='artists'>
@@ -103,7 +119,6 @@ class Tracklist extends Component {
     });
 
     const tracks = this.props.tracks.isTracksFetching ? <Loading /> : tracklist;
-    console.log(this.props.tracks.playlist);
     const header = !this.props.tracks.playlist || this.props.tracks.playlist.length != 0 ? this.renderHeader() : null;
 
     return (

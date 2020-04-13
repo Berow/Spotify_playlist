@@ -12,11 +12,13 @@ class Playlists extends Component {
     }
   }
 
+  /*
   componentDidUpdate(prevProps) {
     if (this.props.auth.isAuth !== prevProps.auth.isAuth && this.props.auth.isAuth) {
       this.props.getAllPlaylists();
     }
   }
+  */
 
   // onPlaylistClick() {}
 
@@ -41,10 +43,10 @@ class Playlists extends Component {
     );
 
     return (
-      <div className='playlists'>        
-          <h3>Плейлисты</h3>
-          <ul>{playlists}</ul>
-        </div>      
+      <div className='playlists'>
+        <h3>Плейлисты</h3>
+        <ul>{playlists}</ul>
+      </div>
     );
   }
 }
