@@ -88,22 +88,21 @@ h3 {
   color: $color-white;
   margin-bottom: 1rem;
   align-items: center;
-  
+
   @media (min-width: 40rem) {
     color: $color-white;
     flex-direction: row;
     margin-bottom: 1rem;
     align-items: center;
-    
   }
 }
 
 .playlist-image {
   width: 100%;
   @media (min-width: 40rem) {
-  width: 20%;
-  height: 20%;
-  flex-shrink: 1;
+    width: 20%;
+    height: 20%;
+    flex-shrink: 1;
   }
 }
 
@@ -117,13 +116,16 @@ h3 {
     display: flex;
     margin-bottom: 1rem;
     align-items: flex-start;
-    
   }
 }
 
 .playlist-description {
   opacity: 0.6;
   margin-top: 2rem;
+  a {
+    color: $color-white;
+    text-decoration: underline;
+  }
 }
 
 .playlist-trackcount {

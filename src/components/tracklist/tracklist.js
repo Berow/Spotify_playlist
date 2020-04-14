@@ -73,9 +73,12 @@ class Tracklist extends Component {
 
   renderTracks() {
     console.log(this.props.tracks.tracks);
-    const tracklist = this.props.tracks.tracks.map((item, index) => {
-      const trackName = <div className='trackname'>{item.track.name}</div>;
-      const albumName = <div className='albumname'>{item.track.album.name}</div>;
+    const tracklist = this.props.tracks.tracks.map((item) => {
+      if (item.track === null) {
+        return
+      }
+      const trackName = <div className='trackname'>{item.track && item.track.name}</div>;
+      const albumName = <div className='albumname'>{item.track.album && item.track.album.name}</div>;
 
       const image = (
         <img
