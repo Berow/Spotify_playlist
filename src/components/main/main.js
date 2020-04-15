@@ -7,6 +7,7 @@ import Header from '../header/header';
 import Tracklist from '../tracklist/tracklist';
 import Playlists from '../playlists/playlists';
 import Auth from '../auth/auth';
+import NotFound from '../404/404';
 import './main.scss';
 
 class Main extends Component {
@@ -22,16 +23,21 @@ class Main extends Component {
       <div className='container'>
         <Router>
           <Switch>
-            <Route path='/' exact
+            <Route
+              path='/'
+              exact
               render={() => (
                 <React.Fragment>
                   <Header />
                   <Playlists />
                   <Tracklist />
                 </React.Fragment>
-              )} />
+              )}
+            />
 
             <Route path='/auth' exact component={Auth} />
+            <Route path='/404' exact component={NotFound} />
+            <Redirect to='/404' />
           </Switch>
         </Router>
       </div>

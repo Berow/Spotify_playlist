@@ -20,8 +20,6 @@ class Playlists extends Component {
   }
   */
 
-  // onPlaylistClick() {}
-
   renderPlaylist(playlist) {
     return playlist.map((item) => {
       const label = item.name;
