@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { userAuth } from '../../actions/actions';
+import { userAuth, getUser } from '../../actions/actions';
 import { connect } from 'react-redux';
-import { withRouter, Redirect, ro } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import queryString from 'query-string';
 
 class Auth extends Component {
@@ -11,7 +11,11 @@ class Auth extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const token = localStorage.getItem('token');
     if (this.props.isAuth !== prevProps.isAuth) {
+      if (token) {
+        this.props.getUser(token);
+      }
       this.props.history.push('/');
     }
   }
@@ -27,6 +31,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   userAuth: userAuth,
+  getUser: getUser,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Auth));

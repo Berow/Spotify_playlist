@@ -139,24 +139,7 @@ const reducer = (state = initialState, action) => {
           isTracksFetching: false,
         },
         error: action.payload,
-      };
-
-    // case 'REFRESH_REQUEST':
-    //   return {
-    //     ...state,
-    //     isFetching: true,
-    //     error: '',
-    //   };
-    // case 'REFRESH_SUCCESS':
-    //   return {
-    //     ...state,
-    //     token: action.payload.token,
-    //     refresh_token: action.payload.refresh_token,
-    //   };
-    // case 'REFRESH_FAIL':
-    //   return {
-    //     ...state,
-    //   };
+      };    
 
     default:
       return state;

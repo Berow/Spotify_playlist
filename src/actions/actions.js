@@ -14,19 +14,19 @@ const userAuth = (code, state) => {
         payload: new Error('State mismatch'),
       });
     } else {
-      spotifyServices.login(code).then((response) => {
+      spotifyServices.login(code).then(response => {
         dispatch({
           type: Constants.AUTH_SUCCESS,
           payload: {
             token: response.access_token,
             refresh_token: response.refresh_token,
           },
-        });
-        (error) => {
+        }),
+        error => {
+          console.log(error);
           dispatch({
             type: Constants.AUTH_FAIL,
-            error: true,
-            payload: new Error('error'),
+            payload: error,
           });
         };
       });
@@ -49,7 +49,7 @@ const getUser = () => {
         dispatch({
           type: Constants.USER_FETCH_FAIL,
           error: true,
-          payload: new Error('error'),
+          payload: new Error(error),
         });
       };
     });
@@ -70,7 +70,7 @@ const getAllPlaylists = () => {
         dispatch({
           type: Constants.PLAYLISTS_FETCH_FAIL,
           error: true,
-          payload: new Error('error'),
+          payload: new Error(error),
         });
       };
     });
@@ -91,54 +91,12 @@ const getPlaylistTracks = (url, playlist) => {
         dispatch({
           type: Constants.TRACKS_FETCH_FAIL,
           error: true,
-          payload: new Error('error'),
+          payload: new Error(error),
         });
       };
     });
   };
 };
-
-// const refreshToken = (token) => {
-//   const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
-//   const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
-
-//   return (dispatch) => {
-//     dispatch({
-//       type: 'REFRESH_REQUEST',
-//     });
-//     axios
-//       .post(
-//         'https://accounts.spotify.com/api/token',
-//         queryString.stringify({
-//           grant_type: 'refresh_token',
-//           refresh_token: token,
-//         }),
-//         {
-//           headers: {
-//             Authorization: 'Basic ' + Buffer.from(`${client_id}:${client_secret}`).toString('base64'),
-//           },
-//         },
-//       )
-//       .then((response) => {
-//         console.log(response);
-
-//         localStorage.setItem('token', response.data.access_token);
-//         // localStorage.setItem('refresh_token', response.data.refresh_token);
-
-//         dispatch({
-//           type: 'REFRESH_SUCCESS',
-//           payload: response,
-//         });
-//       })
-//       .catch(() => {
-//         dispatch({
-//           type: 'REFRESH_FAIL',
-//           error: true,
-//           payload: new Error('Wrong token'),
-//         });
-//       });
-//   };
-// };
 
 const logout = () => {
   return (dispatch) => {

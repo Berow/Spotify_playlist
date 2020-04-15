@@ -2,19 +2,23 @@ import axios from 'axios';
 import queryString from 'query-string';
 
 function handleResponse(response) {
-  // if (!response.status === 200) {
-  if (response.status === 401) {
-    // auto logout if 401 response returned from api
-    // logout();
-    refreshToken(localStorage.getItem('refresh_token'));
 
-    const error = response.status;
+  if (response.status != 200) {
 
-    throw { error };
+    if (response.status === 401 && localStorage.getItem('refresh_token') === undefined) { 
+      // auto logout if 401 response returned from api          
+      logout();
+    }
+    if (response.status === 401) {
+      refreshToken(localStorage.getItem('refresh_token'));
+    }
+    logout();
+    throw response;
   }
-  // }
+
   return response;
 }
+
 
 function getData(url) {
   const token = localStorage.getItem('token');
@@ -58,7 +62,8 @@ function login(code) {
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('refresh_token', response.data.refresh_token);
       return response;
-    });
+    }
+    );
 }
 
 function logout() {
@@ -98,7 +103,6 @@ async function getPlaylistTracks(url) {
 function refreshToken(refreshToken) {
   const client_id = 'ad8f1782d1874b0e9787a0cc7b7e68b1';
   const client_secret = '2d5872aea5994a1cb85a1aa517f3e6f5';
-
   return axios
     .post(
       'https://accounts.spotify.com/api/token',
@@ -120,7 +124,7 @@ function refreshToken(refreshToken) {
       return response;
     })
     .catch((error) => {
-      handleResponse(error.response);
+      handleResponse(error);
     });
 }
 

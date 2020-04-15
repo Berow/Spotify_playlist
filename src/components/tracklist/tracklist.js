@@ -25,14 +25,7 @@ function getRandomString() {
 }
 
 class Tracklist extends Component {
-  /*
-  componentDidUpdate(prevProps) {
-    if (this.props.tracks.tracks !== prevProps.tracks.tracks) {
-      this.renderTracks(this.props.tracks.tracks);
-    }
-  }
-  */
-
+  
   // playPreview(url) {
   //   new Audio(url).play();
   // }
@@ -73,10 +66,8 @@ class Tracklist extends Component {
 
   renderTracks() {
     console.log(this.props.tracks.tracks);
-    const tracklist = this.props.tracks.tracks.map((item) => {
-      if (item.track === null) {
-        return
-      }
+    const tracklist = this.props.tracks.tracks.filter(item => item.track != null).map((item) => {
+      console.log(item);
       const trackName = <div className='trackname'>{item.track && item.track.name}</div>;
       const albumName = <div className='albumname'>{item.track.album && item.track.album.name}</div>;
 
